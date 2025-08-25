@@ -74,7 +74,7 @@ Train:
     - KeepKeys:
         keep_keys:
         - image
-        - label_sar
+        - label
         - length
         - valid_ratio
   loader:
@@ -99,7 +99,7 @@ Eval:
     - KeepKeys:
         keep_keys:
         - image
-        - label_sar
+        - label
         - length
         - valid_ratio
   loader:
