@@ -85,23 +85,18 @@ Train:
     - /kaggle/working/output_checks6/rec/train.txt
     transforms:
     - DecodeImage:
-        img_mode: BGR
-        channel_first: false
-    - RecConAug:
-        prob: 0.5
-        ext_data_num: 2
-        image_shape: [48, 320, 3]
-        max_text_length: *max_text_length
-    - RecAug:
+       img_mode: BGR
+       channel_first: false
     - MultiLabelEncode:
-        gtc_encode: NRTRLabelEncode
+       gtc_encode: NRTRLabelEncode
     - KeepKeys:
-        keep_keys:
-        - image
-        - label_ctc
-        - label_gtc
-        - length
-        - valid_ratio
+       keep_keys:
+         - image
+         - label_ctc
+         - label_gtc
+         - length
+         - valid_ratio
+
   sampler:
     name: MultiScaleSampler
     scales: [[320, 32], [320, 48], [320, 64]]
