@@ -62,7 +62,7 @@ Metric:
 Train:
   dataset:
     name: SimpleDataSet
-    data_dir: /kaggle/working/output_checks6/rec/train
+    data_dir: /kaggle/working/output_checks6/rec/train_crops
     label_file_list:
       - /kaggle/working/output_checks6/rec/train.txt
     transforms:
@@ -88,7 +88,7 @@ Train:
 Eval:
   dataset:
     name: SimpleDataSet
-    data_dir: /kaggle/working/output_checks6/rec/val
+    data_dir: /kaggle/working/output_checks6/rec/val_crops
     label_file_list:
       - /kaggle/working/output_checks6/rec/val.txt
     transforms:
