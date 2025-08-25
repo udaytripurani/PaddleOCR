@@ -77,7 +77,7 @@ Train:
         - image
         - label_sar
         - length
-        - valid_ratio
+        
   loader:
     shuffle: true
     batch_size_per_card: 64   # adjust based on GPU memory
@@ -103,7 +103,7 @@ Eval:
         - image
         - label_sar
         - length
-        - valid_ratio
+        
   loader:
     shuffle: false
     drop_last: false
