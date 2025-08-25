@@ -1,6 +1,6 @@
 # ------------------- Global Settings -------------------
 Global:
-  debug: false
+  debug: true
   use_gpu: true
   epoch_num: 100
   log_smooth_window: 20
