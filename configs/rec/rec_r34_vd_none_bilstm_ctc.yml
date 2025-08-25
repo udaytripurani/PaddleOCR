@@ -1,61 +1,109 @@
-# save as configs/rec/rec_r34_vd_sar.yml
+# ------------------- Global Settings -------------------
 Global:
+  debug: false
   use_gpu: true
-  epoch_num: 200
+  epoch_num: 500
   log_smooth_window: 20
-  pretrained_model: ./pretrain_models/en_server_resnet34_sar
-  checkpoints:
-  save_model_dir: ./output/rec_r34_sar
-  save_epoch_step: 5
   print_batch_step: 10
-  eval_batch_step: [0, 200]
-  cal_metric_during_train: True
+  save_model_dir: ./output/rec_r34_sar_cheque
+  save_epoch_step: 3
+  eval_batch_step: [0, 2000]
+  cal_metric_during_train: true
+  pretrained_model: ./pretrain_models/en_PP-OCRv3_rec_train  # path to your extracted pretrained model
+  checkpoints:
+  save_inference_dir:
+  use_visualdl: false
+  character_dict_path: ppocr/utils/en_dict.txt
+  max_text_length: &max_text_length 80
+  infer_mode: false
+  use_space_char: true
+  distributed: true
+  save_res_path: ./output/rec/predicts_r34_sar.txt
 
+# ------------------- Optimizer -------------------
+Optimizer:
+  name: Adam
+  beta1: 0.9
+  beta2: 0.999
+  lr:
+    name: Cosine
+    learning_rate: 0.0001   # smaller LR for fine-tuning
+    warmup_epoch: 5
+  regularizer:
+    name: L2
+    factor: 3.0e-05
+
+# ------------------- Model Architecture -------------------
 Architecture:
   model_type: rec
   algorithm: SAR
   Backbone:
     name: ResNet
-    layers: 34
+    layers: 34   # Change to 45 for ResNet45
   Head:
     name: SARHead
     enc_dim: 512
-    max_text_length: 80
+    max_text_length: *max_text_length
 
+# ------------------- Loss -------------------
 Loss:
   name: SARLoss
 
-Optimizer:
-  name: Adam
-  lr:
-    learning_rate: 0.0001
-
 PostProcess:
   name: SARLabelDecode
-  max_text_length: 80
+  max_text_length: *max_text_length
 
 Metric:
   name: RecMetric
   main_indicator: acc
+  ignore_space: False
 
+# ------------------- Train Dataset -------------------
 Train:
   dataset:
     name: SimpleDataSet
     data_dir: /kaggle/working/output_checks6/rec/train
-    label_file_list: ["/kaggle/working/output_checks6/rec/train_list.txt"]
+    label_file_list:
+      - /kaggle/working/output_checks6/rec/train_list.txt
+    transforms:
+    - DecodeImage:
+        img_mode: BGR
+        channel_first: false
+    - RecResizeImg:
+        image_shape: [3, 48, 320]
+    - KeepKeys:
+        keep_keys:
+        - image
+        - label_sar
+        - length
+        - valid_ratio
   loader:
-    batch_size_per_card: 32
-    shuffle: True
-    drop_last: True
+    shuffle: true
+    batch_size_per_card: 64   # adjust based on GPU memory
+    drop_last: true
     num_workers: 4
 
+# ------------------- Eval Dataset -------------------
 Eval:
   dataset:
     name: SimpleDataSet
     data_dir: /kaggle/working/output_checks6/rec/val
-    label_file_list: ["/kaggle/working/output_checks6/rec/val_list.txt"]
+    label_file_list:
+      - /kaggle/working/output_checks6/rec/val_list.txt
+    transforms:
+    - DecodeImage:
+        img_mode: BGR
+        channel_first: false
+    - RecResizeImg:
+        image_shape: [3, 48, 320]
+    - KeepKeys:
+        keep_keys:
+        - image
+        - label_sar
+        - length
+        - valid_ratio
   loader:
-    batch_size_per_card: 32
-    shuffle: False
-    drop_last: False
+    shuffle: false
+    drop_last: false
+    batch_size_per_card: 64
     num_workers: 4
