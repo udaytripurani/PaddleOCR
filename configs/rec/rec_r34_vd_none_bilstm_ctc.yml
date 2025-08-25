@@ -71,6 +71,7 @@ Train:
         channel_first: false
     - RecResizeImg:
         image_shape: [3, 48, 320]
+    - MultiLabelEncode:
     - KeepKeys:
         keep_keys:
         - image
@@ -96,6 +97,7 @@ Eval:
         channel_first: false
     - RecResizeImg:
         image_shape: [3, 48, 320]
+    - MultiLabelEncode:
     - KeepKeys:
         keep_keys:
         - image
