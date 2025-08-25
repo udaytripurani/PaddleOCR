@@ -21,6 +21,8 @@ Global:
   distributed: true
   save_res_path: ./output/rec/predicts_ppocrv3.txt
   d2s_train_image_shape: [3, 48, 320]
+  use_amp: true
+  amp_level: O1
 
 
 Optimizer:
@@ -111,7 +113,7 @@ Train:
     shuffle: true
     batch_size_per_card: *bs
     drop_last: true
-    num_workers: 8
+    num_workers: 16
 Eval:
   dataset:
     name: SimpleDataSet
@@ -137,4 +139,4 @@ Eval:
     shuffle: false
     drop_last: false
     batch_size_per_card: 128
-    num_workers: 4
+    num_workers: 8
