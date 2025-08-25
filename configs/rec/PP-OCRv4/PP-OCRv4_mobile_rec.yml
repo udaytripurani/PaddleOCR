@@ -42,7 +42,7 @@ Architecture:
   Transform:
   Backbone:
     name: MobileNetV3
-    scale: 0.6
+    scale: 0.75
   Head:
     name: MultiHead
     head_list:
