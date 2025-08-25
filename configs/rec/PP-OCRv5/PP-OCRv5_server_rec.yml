@@ -81,7 +81,7 @@ Train:
     data_dir: ./train_data/
     ext_op_transform_idx: 1
     label_file_list:
-    - ./train_data/train_list.txt
+    - ./kaggle/working/output_checks6/train.txt
     transforms:
     - DecodeImage:
         img_mode: BGR
@@ -113,7 +113,7 @@ Eval:
     name: SimpleDataSet
     data_dir: ./train_data
     label_file_list:
-    - ./train_data/val_list.txt
+    - ./kaggle/working/output_checks6/val.txt
     transforms:
     - DecodeImage:
         img_mode: BGR
