@@ -9,7 +9,7 @@ Global:
   save_epoch_step: 3
   eval_batch_step: [0, 2000]
   cal_metric_during_train: true
-  pretrained_model: ./pretrain_models/en_PP-OCRv3_rec_train  # path to your extracted pretrained model
+  pretrained_model: /kaggle/working/pretrain_models/en_PP-OCRv3_rec_train.pdparams  # path to your extracted pretrained model
   checkpoints:
   save_inference_dir:
   use_visualdl: false
